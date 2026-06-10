@@ -20,22 +20,22 @@
 
         <ul class="enlaces">
             <li class="enlace">
-                <a href="post">
+                <a href="get.html">
+                    <span>CONSULTAR</span>
+                </a>
+            </li>
+            <li class="enlace">
+                <a href="post.html">
                     <span>CREAR</span>
                 </a>
             </li>
             <li class="enlace">
-                <a href="get">
-                    <span>OBTENER</span>
-                </a>
-            </li>
-            <li class="enlace">
-                <a href="put">
+                <a href="put.html">
                     <span>MODIFICAR</span>
                 </a>
             </li>
             <li class="enlace">
-                <a href="delete">
+                <a href="delete.html">
                     <span>ELIMINAR</span>
                 </a>
             </li>
@@ -62,24 +62,30 @@
 
         async function mostrarProductos() {
             try {
-                const response = await fetch("http://localhost:3000/api/products")
+                const response = await fetch("http://localhost:3000/api/productos")
+
+                //Verificar que la respuesta HTTP fue exitosa o crear un error si no lo fue
+                if(!response.ok){
+                    throw new Error(`<br>Error ${response.statusText} ${response.status}`)
+                }
+
+
                 const datos = await response.json()
-
                 let productos = datos.payload
-
-                console.log(productos)
 
                 renderizarProductos(productos)
 
             } catch (error) {
-                console.log(error)
+                //Mostrar el error en el DOM (Visualmente)
+                contenedorProductos.innerHTML = `
+                    <p class="error">Error al cargar los productos ${error.message}</p>
+                `
             }
         }
 
         function renderizarProductos(productos){
             let htmlProductos = ""
             productos.forEach(producto => {
-                console.log(producto)
                 htmlProductos += `
                 <div class="card-producto">
                     <img src="assets/logo.jpg" alt="">

@@ -23,36 +23,81 @@ app.use((req, res, next)=>{
     next() //next indica que pase al siguiente middleware o a la response
 })
 
+//Middleware para filtrar id's no válidas
+const validateId = (req, res, next) => {
+    const { id } = req.params
+    
+    //REGEX que acepta solo digitos enteros positivos (No deja pasar por ej "-1", "hola", "0")
+    if (!/^\d+$/.test(id)) {
+            return res.status(400).json({
+            message: "El ID debe ser un número entero positivo"
+        })
+    }
+
+    //Convertir el string a numero entero int (base 10 decimal)
+    const parsedId = parseInt(id, 10)
+
+    if (parsedId === 0) {
+        return res.status(400).json({
+            message: "El ID debe ser mayor a 0"
+        })
+    }
+
+    req.id = parsedId
+
+    next()
+}
+
 //Crear la URL que proporciona X información
 
-//GET ALL Products
-app.get("/api/products", async (req, res)=>{ //Indico que el callback (La funcion que tiene como parametros req y res) es asíncrona
+//Index (GET ALL Productos)
+app.get("/api/productos", async (req, res)=>{ //Indico que el callback (La funcion que tiene como parametros req y res) es asíncrona
     try {
-        const querySelectAll = "SELECT * FROM products"
-        const [rows, metadatos] = await connection.query(querySelectAll) //connection.query trae las filas de resultado y los metadatos, rows nos permite solo recuperar los datos que queremos mostrar
+        const querySelectAll = "SELECT id, nombre, precio, disponibilidad, img FROM productos"
+        
+        //connection.query trae las filas de resultado y los metadatos, rows nos permite solo recuperar los datos que queremos mostrar
+        const [rows, metadatos] = await connection.query(querySelectAll) 
+
+        //Si no hay productos en la tabla
+        if(rows.length === 0){
+            return res.status(404).json({
+                message: "No se encontraron productos"
+            })
+        }
 
         //Respuesta de la query devuelta por la pagina en JSON junto con su estado
         res.status(200).json({
-            payload: rows
+            payload: rows,
+            total: rows.length
         })
     } catch (error) {
-        console.log("Error obteniendo productos:", error.message)
+        //Devolver algo en caso de error en la conexión, mucha tardanza, tabla no existe, etc
+        res.status(500).json({ // 505 : El servidor encontró un problema inesperado y no pudo completar la solicitud
+            message: "Error interno al obtener productos"
+        })
     }
 })
 
-app.get("/api/products/:id", async (req, res)=>{
+//Consultar (GET By ID) - Llamo al middlware para validar el ID
+app.get("/api/productos/:id", validateId, async (req, res)=>{
     try {
         const { id } = req.params //igual a: id = req.params.id, la solución actual es destructuring
-        const querySelectById = "SELECT * FROM products where products.id = ?" //El interrogante es el placeholder (:id)
+        const querySelectById = "SELECT id, nombre, precio, disponibilidad, img FROM productos where productos.id = ?" //El interrogante es el placeholder (:id)
         const [rows] = await connection.query(querySelectById, [id]) //[id] rellena al placeholder, de ser varios, se usa de forma respectiva
 
-        console.log(rows)
+        if(rows.length === 0){
+            return res.status(404).json({
+                message: `No se encontró un producto con el id ${id}`
+            })
+        }
         res.status(200).json({
             payload: rows
         })
 
     } catch (error) {
-        console.log("Error obteniendo productos:", error.message)
+        res.status(500).json({
+            message: "Error el interno al obtener el producto"
+        })
     }
 })
 
