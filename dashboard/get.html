@@ -76,20 +76,30 @@
             event.preventDefault()
 
             const idProd = event.target.idProd.value.trim();
-            try {
-                const response = await fetch(`http://localhost:3000/api/productos/${idProd}`)
 
+            if (!idProd){
+                mostrarError("Error al mostrar los productos. Ingresá un ID válido")
+                return
+            }
+            
+            //Es mejor no hardcodear el link del fetch
+            const urlBase = `http://localhost:3000/api/productoss`
+
+            try {
+                const response = await fetch(`${urlBase}/${idProd}`)
+                const datos = await response.json()
+                
+                //Comprobar si no es una response 200-299, como un 404
                 if(!response.ok){
-                    const errorDatos = await response.json()
-                    throw new Error(`${errorDatos.message}`)
+                    mostrarError(datos.message)
+                    return
                 }
 
-                const datos = await response.json()
                 const producto = datos.payload;
 
                 renderizarProducto(producto[0])
             } catch (error) {
-                contenedorProductos.innerHTML = `<p class="error">Error al cargar el producto. ${error.message}</p>`
+                mostrarError(`Error al cargar el producto ${error.message}`)
             }
 
         })
@@ -108,6 +118,12 @@
             `;
 
             contenedorProductos.innerHTML = htmlProducto;
+        }
+
+        function mostrarError(mensaje){
+            contenedorProductos.innerHTML = `
+                    <p class="mensaje error">${mensaje}</p>
+                `
         }
     </script>
 </body>

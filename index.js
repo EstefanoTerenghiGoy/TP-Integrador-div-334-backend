@@ -48,12 +48,39 @@ const validateId = (req, res, next) => {
     next()
 }
 
+//Middleware de ruta para comprobar los productos
+const categoriasValidas = ["mouse", "teclado"]
+const validateProducto = (req, res, next)=>{
+    //Cosas a comprobar
+    const { nombre, precio, categoria } = req.body 
+
+    const errores = []
+
+    if (typeof nombre !== "string" || nombre.trim().length < 2) {
+        errores.push("El nombre debe tener al menos 2 caracteres")
+    }
+    if (typeof precio !== "number" || precio <= 0) {
+        errores.push("El precio debe ser mayor a 0")
+    }
+    if (!categoriasValidas.includes(categoria)) {
+        errores.push("Categoría inválida")
+    }
+    //No se validan imagenes porque luego vamos a usar una herramienta para hacerlo
+
+    if (errores.length > 0) {
+        return res.status(400).json({
+            message: "Datos inválidos", errores
+        })
+    }
+    next()
+}
+
 //Crear la URL que proporciona X información
 
 //Index (GET ALL Productos)
 app.get("/api/productos", async (req, res)=>{ //Indico que el callback (La funcion que tiene como parametros req y res) es asíncrona
     try {
-        const querySelectAll = "SELECT id, nombre, precio, disponibilidad, img FROM productos"
+        const querySelectAll = "SELECT id, nombre, precio, disponibilidad, img, categoria FROM productos"
         
         //connection.query trae las filas de resultado y los metadatos, rows nos permite solo recuperar los datos que queremos mostrar
         const [rows, metadatos] = await connection.query(querySelectAll) 
@@ -81,13 +108,14 @@ app.get("/api/productos", async (req, res)=>{ //Indico que el callback (La funci
 //Consultar (GET By ID) - Llamo al middlware para validar el ID
 app.get("/api/productos/:id", validateId, async (req, res)=>{
     try {
-        const { id } = req.params //igual a: id = req.params.id, la solución actual es destructuring
+        //No hace falta traer el id así, ya que el middleware validateId lo trae directamente y limpio (usando req.id)
+        // const { id } = req.params //igual a: id = req.params.id, la solución actual es destructuring
         const querySelectById = "SELECT id, nombre, precio, disponibilidad, img FROM productos where productos.id = ?" //El interrogante es el placeholder (:id)
-        const [rows] = await connection.query(querySelectById, [id]) //[id] rellena al placeholder, de ser varios, se usa de forma respectiva
-
+        const [rows] = await connection.query(querySelectById, [req.id]) //[req.id] rellena al placeholder, de ser varios, se usa de forma respectiva
+        
         if(rows.length === 0){
             return res.status(404).json({
-                message: `No se encontró un producto con el id ${id}`
+                message: `No se encontró un producto con el id ${req.id}`
             })
         }
         res.status(200).json({
@@ -97,6 +125,81 @@ app.get("/api/productos/:id", validateId, async (req, res)=>{
     } catch (error) {
         res.status(500).json({
             message: "Error el interno al obtener el producto"
+        })
+    }
+})
+
+//Crear un producto (POST) - Llamo al middlware que valida los productos
+app.post("/api/productos", validateProducto, async (req, res)=>{
+    try {
+        //req.body toma la información enviada en el "body" de la request (Especificados en el html de POST)
+        const { nombre, precio, imagen, categoria } = req.body
+
+        //Si falta algun dato
+        if (!nombre || !imagen || !categoria || !precio) {
+            return res.status(400).json({
+                message: "Datos inválidos. Asegurese de incluir todos los datos"
+            })
+        }
+
+        //Sanitizar los strings para normalizar los datos
+        const clearNombre = nombre.trim()
+
+
+        const sqlCrearProducto = "INSERT INTO productos (nombre, imagen, categoria, precio) VALUES (?, ?, ?, ?)"
+
+        //Guardarlo en Rows para obtener el nuevo ID creado
+        const [rows] = await connection.query(sqlCrearProducto, [nombre, imagen, categoria, precio])
+
+        //Mas especifico que un 200, 201 (Created)
+        res.status(201).json({
+            message: "Producto creado con éxito",
+            productId: rows.insertId //Devuelvo el ID creado
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+//Modificar un producto (PUT) - Llamo al middleware para validar los productos
+app.put("/api/products", validateProducto, async (req, res)=>{
+    try {
+        //Destructuring para obtener los datos necesarios del body del request
+        const { id, nombre, precio,  disponibilidad, imagen, categoria, } = req.body
+
+        const sqlModificarProducto = "UPDATE productos SET nombre = ?, precio = ?, disponibilidad = ?, imagen = ?, categoria = ? where id = ?"
+    
+        await connection.query(sqlModificarProducto, [nombre, precio, disponibilidad, imagen, categoria, id])
+
+        res.status(200).json({
+            message: "Producto modificado correctamente"
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+//Eliminar un producto (DELETE) - Llamo al middleware para verificar el ID
+app.delete("/api/products/:id", validateId, async (req, res) =>{
+    try {
+        const sqlDeleteById = "DELETE FROM productos WHERE id = ?"
+        //No hace falta guardar en variable porque no vamos a traer nada
+        await connection.query(sqlDeleteById, [req.id])
+
+        //Se puede enviar un status 200 para devolver un mensaje
+        res.status(200).json({
+            message: "Producto eliminado correctamente"
+        })
+        //O un 204 (No content) que es correcto pero no devuelve el message (Mas usado en la práctica)
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error interno con el servidor"
         })
     }
 })
