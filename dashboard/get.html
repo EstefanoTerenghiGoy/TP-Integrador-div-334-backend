@@ -18,12 +18,12 @@
 
         <ul class="enlaces">
             <li class="enlace">
-                <a href="post.html">
+                <a href="get.html">
                     <span>CONSULTAR</span>
                 </a>
             </li>
             <li class="enlace">
-                <a href="get.html">
+                <a href="post.html">
                     <span>CREAR</span>
                 </a>
             </li>
@@ -83,7 +83,7 @@
             }
             
             //Es mejor no hardcodear el link del fetch
-            const urlBase = `http://localhost:3000/api/productoss`
+            const urlBase = `http://localhost:3000/api/products`
 
             try {
                 const response = await fetch(`${urlBase}/${idProd}`)
