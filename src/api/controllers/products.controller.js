@@ -36,15 +36,15 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     try {
-        const { nombre, precio, img, categoria } = req.body; // Cambiado 'imagen' por 'img' para consistencia
+        const { nombre, precio, disponibilidad, img, categoria } = req.body; // Cambiado 'imagen' por 'img' para consistencia
 
-        if (!nombre || !img || !categoria || !precio) {
+        if (!nombre || !img || !categoria || !precio || !disponibilidad) {
             return res.status(400).json({ message: "Datos inválidos. Asegúrese de incluir todos los datos" });
         }
 
         const clearNombre = nombre.trim();
 
-        const [result] = await productsModel.insertProduct(clearNombre, img, categoria, precio)
+        const [result] = await productsModel.insertProduct(clearNombre, precio, disponibilidad, img, categoria)
 
         res.status(201).json({
             message: "Producto creado con éxito",
@@ -58,7 +58,9 @@ export const createProduct = async (req, res) => {
 
 export const modifyProduct = async (req, res) => {
     try {
-        const { id, nombre, precio, disponibilidad, img, categoria } = req.body;
+        const { nombre, precio, disponibilidad, img, categoria } = req.body;
+
+        const id = req.id;
 
         await productsModel.updateProduct(nombre, precio, disponibilidad, img, categoria, id)
 

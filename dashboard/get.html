@@ -97,9 +97,9 @@
 
                 const producto = datos.payload;
 
-                renderizarProducto(producto[0])
+                renderizarProducto(producto)
             } catch (error) {
-                mostrarError(`Error al cargar el producto ${error.message}`)
+                mostrarError(`Error al cargar el producto: ${error.message}`)
             }
 
         })

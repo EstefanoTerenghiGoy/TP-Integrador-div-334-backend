@@ -67,6 +67,11 @@ header, .enlaces{
     padding: 10px;
 }
 
+#botones-modal-eliminar{
+    display:flex;
+    gap:10px;
+}
+
 .error{
     color: #dc3545;
     background-color: #430c11;

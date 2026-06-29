@@ -13,9 +13,9 @@ const selectProductById = (id) => {
 }
 
 
-const insertProduct = (nombre, img, categoria, precio) => {
-    const sqlCrearProducto = "INSERT INTO products (nombre, img, categoria, precio) VALUES (?, ?, ?, ?)";
-    return connection.query(sqlCrearProducto, [nombre, img, categoria, precio]);
+const insertProduct = (nombre, precio, disponibilidad, img, categoria) => {
+    const sqlCrearProducto = "INSERT INTO products (nombre, precio, disponibilidad, img, categoria) VALUES (?, ?, ?, ?, ?)";
+    return connection.query(sqlCrearProducto, [nombre, precio, disponibilidad, img, categoria]);
 
 }
 
@@ -26,7 +26,7 @@ const updateProduct = (nombre, precio, disponibilidad, img, categoria, id) => {
 
 const deleteProduct = (id) => {
     const sqlDeleteById = "DELETE FROM products WHERE id = ?";
-    return connection.query(sqlDeleteById, [req.id]);
+    return connection.query(sqlDeleteById, [id]);
 }
 
 //Default = puedo ponerle otro nombre al importarlo
