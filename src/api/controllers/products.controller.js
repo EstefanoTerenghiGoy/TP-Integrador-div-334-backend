@@ -1,5 +1,4 @@
 //Controladores de prodcutos
-import connection from "../database/db.js";
 import productsModel from "../models/products.model.js";
 
 // Index (GET ALL Products)
