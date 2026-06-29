@@ -17,7 +17,7 @@ router.get("/:id", validateId, getProductById);
 router.post("/", validateProducto, createProduct);
 
 // Modificar un producto (PUT)
-router.put("/", validateProducto, modifyProduct);
+router.put("/:id", validateId, validateProducto, modifyProduct);
 
 // Eliminar un producto (DELETE)
 router.delete("/:id", validateId, deleteProduct);

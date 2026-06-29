@@ -50,7 +50,6 @@
 
             <form id="deleteProducto-form">
                 <label for="idProd">ID del producto</label>
-
                 <input type="number" id="idProd" name="idProd" required>
 
                 <input type="submit" value="Buscar producto">
@@ -59,11 +58,8 @@
 
         <section class="seccion-productos">
             <hr>
-            <div id="contenedor-productos">
-
-            </div>
+            <div id="contenedor-productos"></div>
         </section>
-
     </main>
 
     <dialog id="modal-eliminar">
@@ -77,7 +73,6 @@
     </dialog>
 
     <script>
-
         const contenedorProductos = document.getElementById("contenedor-productos");
         const deleteProductoForm = document.getElementById("deleteProducto-form");
 
@@ -87,6 +82,7 @@
         const cancelarBtn = document.getElementById("btn-cancelar");
         const confirmarBtn = document.getElementById("btn-confirmar");
 
+        const urlBase = "http://localhost:3000/api/products";
         let productoActual = null;
 
         deleteProductoForm.addEventListener("submit", async (event)=>{
@@ -99,10 +95,7 @@
                 return;
             }
 
-            const urlBase = "http://localhost:3000/api/products";
-
             try{
-
                 const response = await fetch(`${urlBase}/${idProd}`);
                 const datos = await response.json();
 
