@@ -1,0 +1,29 @@
+<%- include("partials/head.ejs") %>
+
+<!-- 
+En action="" url del endpoint /login
+en method="" determinar si enviamos con get o post
+
+por default, form manda datos como urlencoded
+
+gracias al middleware 
+    app.use(express.urlencoded({
+
+    }))
+-->
+
+<form id="loginForm" class="" action="/login" method="post">
+    <label for="emailUser">Email</label>
+    <input type="email" name="email" id="emailUser" value="estefanotgoy@gmail.com">
+
+    <label for="passwordUser">Password</label>
+    <input type="password" name="password" id="passwordUser">
+
+    <div>
+        <input type="submit" value="login">
+    </div>
+</form>
+
+<% if(typeof error !== undefined) { %>
+    <p class="mensaje mensaje-error"><%= "error" %></p> <!-- va error como variable -->
+<% } %>

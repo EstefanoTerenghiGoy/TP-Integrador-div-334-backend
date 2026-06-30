@@ -55,8 +55,18 @@ const validateProducto = (req, res, next)=>{
     next()
 }
 
+//Middleware de ruta basico para protección de rutas
+const requireLogin = (req, res, next) => {
+    if (!req.session.user) {
+        return res.redirect("/login")
+    }
+
+    next()
+}
+
 export {
     loggerURL,
     validateId,
-    validateProducto
+    validateProducto,
+    requireLogin
 }
