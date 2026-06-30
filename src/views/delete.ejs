@@ -1,0 +1,33 @@
+<%- include("partials/head.ejs") %>
+
+<%- include("partials/nav.ejs") %>
+<main>
+    <section class="form-productos">
+        <h2>Eliminar producto</h2>
+
+        <form id="deleteProducto-form">
+            <label for="idProd">ID del producto</label>
+            <input type="number" id="idProd" name="idProd" required>
+
+            <input type="submit" value="Buscar producto">
+        </form>
+    </section>
+
+    <section class="seccion-productos">
+        <hr>
+        <div id="contenedor-productos"></div>
+    </section>
+</main>
+
+<dialog id="modal-eliminar">
+    <h3>Confirmar eliminación</h3>
+    <p id="mensaje-modal"></p>
+
+    <div id="botones-modal-eliminar">
+        <button id="btn-cancelar">Cancelar</button>
+        <button id="btn-confirmar">Eliminar</button>
+    </div>
+</dialog>
+
+<script src="/js/delete.js"></script>
+<%- include("partials/footer.ejs") %>

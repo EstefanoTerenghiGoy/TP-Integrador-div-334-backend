@@ -1,0 +1,23 @@
+<%- include("partials/head.ejs") %>
+
+<%- include("partials/nav.ejs") %>
+
+
+<main>
+        <section>
+            <h2>Buscar producto</h2>
+            <form id="buscar-form">
+                <label for="idProducto">ID del producto</label>
+                <input type="number" name="idProd" id="idProd" required>
+
+                <input type="submit" value="Buscar">
+            </form>
+        </section>
+
+        <hr>
+        <div id="contenedor"></div>
+    </main>
+
+    <script src="/js/put.js"></script>
+
+<%- include("partials/footer.ejs") %>
