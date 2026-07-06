@@ -9,4 +9,7 @@ router.get("/", loginView);
 // Obtener usuarios admin
 router.post("/", getAdminUser);
 
+// Destruir sesion
+router.post("/destroy", destroySession);
+
 export default router;
