@@ -41,12 +41,17 @@ const crearUsuarioForm = document.getElementById("crear-usuario-form");
 
 crearUsuarioForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+    console.log("antes de enviar body");
+    
 
     const body = {
-        nombre: event.target.nombre.value.trim(),
+        name: event.target.nombre.value.trim(),
         email: event.target.email.value.trim(),
         password: event.target.password.value
     };
+
+    console.log("despues de enviar body");
+    
 
     try {
         const response = await fetch("http://localhost:3000/api/users", {

@@ -50,7 +50,6 @@ export const putView = (req, res) => {
 
 //Vista delete
 export const deleteView = (req, res) => {
-    res.render("delete");
     res.render("delete", {
         title: "Eliminar",
         about: "Consultar producto por id:"
