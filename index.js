@@ -5,7 +5,7 @@ import cors from "cors";
 import session from "express-session";
 // Destructuramos los middlewares para poder usarlos directamente
 import { loggerURL } from "./src/api/middlewares/middlewares.js";
-import { authRoutes, productRoutes, viewRoutes } from "./src/api/routes/index.js";
+import { userRoutes, authRoutes, productRoutes, viewRoutes } from "./src/api/routes/index.js";
 import { __dirname, join } from "./src/api/utils/index.js";
 
 //Config
@@ -39,6 +39,7 @@ app.use(session({
 
 //Rutas
 app.use("/api/products", productRoutes)
+app.use("/api/users", userRoutes);
 //Renderizar EJS
 app.use("/dashboard", viewRoutes)
 app.use("/login", authRoutes);
