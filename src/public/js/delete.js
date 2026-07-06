@@ -41,7 +41,7 @@ deleteProductoForm.addEventListener("submit", async (event) => {
 function renderizarProducto(producto) {
     contenedorProductos.innerHTML = `
             <div class="card-producto">
-                <img src="assets/logo.jpg" alt="">
+                <img src="${producto.img}" alt="">
                 <h3>${producto.nombre}</h3>
                 <p>ID: ${producto.id}</p>
                 <p>$${producto.precio}</p>
