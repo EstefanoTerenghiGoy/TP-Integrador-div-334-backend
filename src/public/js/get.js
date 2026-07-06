@@ -38,7 +38,7 @@ function renderizarProducto(producto) {
     let htmlProducto = `
             <ul class="card-producto">
                 <li class="lista-producto">
-                    <img src="assets/logo.jpg" alt="">
+                    <img src="${producto.img}" alt="">
                     <h3>${producto.nombre}</h3>
                     <p>id: ${producto.id}</p>
                     <p>$${producto.precio}</p>
