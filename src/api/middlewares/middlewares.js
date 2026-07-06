@@ -3,6 +3,7 @@ const loggerURL = ((req, res, next)=>{
     console.log(`El ${new Date().toLocaleString()} hubo una peticion ${req.method} de la URL ${req.url}`)
     next() //next indica que pase al siguiente middleware o a la response
 })
+
 //Middleware para filtrar id's no válidas
 const validateId = (req, res, next) => {
     const { id } = req.params
@@ -55,13 +56,13 @@ const validateProducto = (req, res, next)=>{
     next()
 }
 
-//Middleware de ruta basico para protección de rutas
+// Middleware de ruta basico para proteccion de rutas
 const requireLogin = (req, res, next) => {
     if (!req.session.user) {
-        return res.redirect("/login")
+        return res.redirect("/login");
     }
 
-    next()
+    next();
 }
 
 export {

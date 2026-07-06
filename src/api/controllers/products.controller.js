@@ -58,9 +58,7 @@ export const createProduct = async (req, res) => {
 
 export const modifyProduct = async (req, res) => {
     try {
-        const { nombre, precio, disponibilidad, img, categoria } = req.body;
-
-        const id = req.id;
+        const { id, nombre, precio, disponibilidad, img, categoria } = req.body;
 
         await productsModel.updateProduct(nombre, precio, disponibilidad, img, categoria, id)
 

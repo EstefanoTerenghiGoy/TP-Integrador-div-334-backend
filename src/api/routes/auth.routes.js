@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { loginView, getAdminUser } from "../controllers/auth.controller.js";
+import { destroySession, getAdminUser, loginView } from "../controllers/auth.controllers.js";
 
-const router = Router() 
+const router = Router();
 
-router.get("/", loginView)
+// Vista login
+router.get("/", loginView);
 
-router.post("/", getAdminUser)
+// Obtener usuarios admin
+router.post("/", getAdminUser);
 
-export default router
+export default router;

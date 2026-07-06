@@ -3,7 +3,6 @@
 import { Router } from "express";
 import { indexView, getView, postView, putView, deleteView } from "../controllers/views.controller.js";
 import { requireLogin } from "../middlewares/middlewares.js";
-
 const router = Router()
 
 //Vista principal

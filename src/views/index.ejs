@@ -3,30 +3,27 @@
 <%- include("partials/nav.ejs") %>
 
 
-        <main>
-            <section class="seccion-productos">
-                <h2>Nuestros productos</h2>
-                <div id="contenedor-productos">
+<main>
+    <section class="seccion-productos">
+        <h2>Nuestros productos</h2>
+        <div id="contenedor-productos">
 
-                    <% productsList.forEach(producto=> { %>
-                        <div class="card-producto">
-                            <img src="/assets/logo.jpg" alt="<%= producto.nombre %>">
+            <% productsList.forEach(producto=> { %>
+                <div class="card-producto">
+                    <img src="/assets/logo.jpg" alt="<%= producto.nombre %>">
 
-                            <h3>
-                                <%= producto.nombre %>
-                            </h3>
-                            <p>ID: <%= producto.id %>
-                            </p>
-                            <p>Precio: $<%= producto.precio %>
-                            </p>
-                        </div>
-                        <% }) %>
-
+                    <h3>
+                        <%= producto.nombre %>
+                    </h3>
+                    <p>ID: <%= producto.id %>
+                    </p>
+                    <p>Precio: $<%= producto.precio %>
+                    </p>
                 </div>
-            </section>
-        </main>
+                <% }) %>
 
-        <script src="/js/index.js"></script>
-
+        </div>
+    </section>
+</main>
 
 <%- include("partials/footer.ejs") %>

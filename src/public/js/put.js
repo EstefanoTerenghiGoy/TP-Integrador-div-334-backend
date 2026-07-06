@@ -14,6 +14,7 @@ buscarForm.addEventListener("submit", async (event) => {
 
     try {
         const response = await fetch(`${urlBase}/${id}`);
+
         const datos = await response.json();
 
         if (!response.ok) {
@@ -67,6 +68,7 @@ function renderizarFormulario(producto) {
         event.preventDefault();
 
         const body = {
+            id: producto.id,
             nombre: event.target.nombre.value,
             precio: Number(event.target.precio.value),
             disponibilidad: Number(event.target.disponibilidad.value),
@@ -75,7 +77,7 @@ function renderizarFormulario(producto) {
         };
 
         try {
-            const response = await fetch(`${urlBase}/${producto.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+            const response = await fetch(urlBase, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
             const datos = await response.json();
 
             if (!response.ok) {

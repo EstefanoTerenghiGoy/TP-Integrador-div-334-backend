@@ -4,12 +4,12 @@
 import productRoutes from "./products.routes.js"
 import viewRoutes from "./view.routes.js"
 import authRoutes from "./auth.routes.js"
-//import userRoutes from ..
-//import authRoutes from ..
+import userRoutes from "./user.routes.js"
 
 
 export {
     productRoutes,
     viewRoutes,
-    authRoutes
+    authRoutes,
+    userRoutes
 }

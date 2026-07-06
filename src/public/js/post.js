@@ -37,6 +37,46 @@ crearForm.addEventListener("submit", async (event) => {
 
 });
 
+const crearUsuarioForm = document.getElementById("crear-usuario-form");
+
+crearUsuarioForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const body = {
+        nombre: event.target.nombre.value.trim(),
+        email: event.target.email.value.trim(),
+        password: event.target.password.value
+    };
+
+    try {
+        const response = await fetch("http://localhost:3000/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        const datos = await response.json();
+
+        if (!response.ok) {
+            mostrarError(datos.message);
+            return;
+        }
+
+        mensaje.innerHTML = `
+            <p class="mensaje exito">
+                ${datos.message}
+            </p>
+        `;
+
+        crearUsuarioForm.reset();
+
+    } catch (error) {
+        mostrarError(error.message);
+    }
+});
+
 function mostrarError(texto) {
     mensaje.innerHTML = `
                 <p class="mensaje error">${texto}</p>
