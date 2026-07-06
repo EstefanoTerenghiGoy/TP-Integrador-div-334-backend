@@ -9,6 +9,7 @@ header, .enlaces{
     display: flex;
     border: 1px black;
     justify-content: space-between;
+    align-items: center; /* Añadido para centrar verticalmente */
 }
 
 .logo{
@@ -49,6 +50,8 @@ header, .enlaces{
     padding: 10px;        
     box-sizing: border-box; 
 }
+
+
 .card-producto img{
     width: 100px;
 }
@@ -86,11 +89,6 @@ header, .enlaces{
     margin: 0 auto;
 }
 
-.form-productos {
-    display: flex;
-    justify-content: space-between;
-}
-
 .form-container {
     flex: 1;
     display: flex;
@@ -98,9 +96,19 @@ header, .enlaces{
     align-items: center;
 }
 
-.btn-logout {
-    margin-left: 17px;
-    margin-top: 23px;
+/* Estilo para el botón de logout, ahora sin position: absolute */
+.form-logout input[type="submit"] {
+    background-color: #e74c3c; 
+    color: rgb(44, 44, 44);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
 }
 
 .form-alta {
@@ -109,4 +117,26 @@ header, .enlaces{
     width: 45%;
     width: 75%;
     align-items: start;
+}
+
+/* Media Queries (Responsive) */
+
+@media (max-width: 768px) {
+    header, .enlaces {
+        flex-direction: column;
+        height: auto;
+        gap: 15px
+    }
+
+    .enlaces {
+        width: 100%;
+    }
+}
+
+/* Estilo para el formulario de logout */
+.form-logout {
+    position: fixed;
+    top: 20px;      
+    right: 20px;     
+    z-index: 1000; 
 }

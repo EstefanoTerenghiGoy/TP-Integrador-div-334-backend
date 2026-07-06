@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { destroySession, getAdminUser, loginView } from "../controllers/auth.controllers.js";
+import { destroySession, getAdminUser, loginView } from "../controllers/auth.controller.js";
 
 const router = Router();
 

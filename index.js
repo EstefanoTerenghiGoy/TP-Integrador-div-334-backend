@@ -45,5 +45,6 @@ app.use("/dashboard", viewRoutes)
 app.use("/login", authRoutes);
 
 app.listen(PORT, () => {
+    console.log(__dirname)
     console.log("Servidor corriendo en el puerto", PORT);
 });

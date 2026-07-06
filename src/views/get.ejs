@@ -1,36 +1,27 @@
-
 <%- include("partials/head.ejs") %>
 
-<%- include("partials/nav.ejs") %>
+    <%- include("partials/nav.ejs") %>
 
-<main>
-    <section class="form-productos">
-        <h2>Consultar producto por ID</h2>
+        <main>
+            <section class="form-productos">
+                <h2><%= about %></h2>
 
-        <form id="getProducto-form">
-            <label for="idProducto">ID del producto</label>
-            <input type="number" name="idProd" id="idProd" required>
+                <form id="getProducto-form">
+                    <label for="idProducto">ID del producto</label>
+                    <input type="number" name="idProd" id="idProd" required>
 
-            <input type="submit" value="Consultar producto">
-        </form>
-    </section>
+                    <input type="submit" value="Consultar producto">
+                </form>
+            </section>
 
-    <section class="seccion-productos">
-        <hr>
-        <div id="contenedor-productos">
-            <!-- 
-                    <ul>
-                        <li class="lista-producto">
-                            <img src="https://pointlaventanita.com/wp-content/uploads/2024/05/chabona.webp" alt="Fernet Cola Chabona">
-                            <p>Id: 41 / Nombre: Fernet Cola Chabona / <strong>Precio: $4200</strong></p>
-                        </li>
-                    </ul>
-                -->
-        </div>
-    </section>
+            <section class="seccion-productos">
+                <hr>
+                <div id="contenedor-productos">
+                </div>
+            </section>
 
-    <script src="/js/get.js"></script>
+            <script src="/js/get.js"></script>
 
-</main>
+        </main>
 
-<%- include("partials/footer.ejs") %>
+        <%- include("partials/footer.ejs") %>

@@ -8,6 +8,7 @@ export const indexView = async (req, res) => {
         const [rows] = await productsModel.selectAllProducts()
         res.render("index", {
             title: "Inicio",
+            about: "Nuestros productos:",
             productsList: rows
         })
     } catch (error) {
@@ -19,7 +20,8 @@ export const indexView = async (req, res) => {
 export const getView = (req, res) => {
     try {
         res.render("get", {
-            title: "Consultar"
+            title: "Consultar",
+            about: "Consultar producto por id:"
         })
     } catch (error) {
         console.log(error)
@@ -30,7 +32,8 @@ export const getView = (req, res) => {
 export const postView = (req, res) => {
     try {
         res.render("post", {
-            title: "Crear"
+            title: "Crear",
+            about: "Crear producto"
         })
     } catch (error) {
         console.log(error)
@@ -41,7 +44,8 @@ export const postView = (req, res) => {
 export const putView = (req, res) => {
     try {
         res.render("put", {
-            title: "Modificar"
+            title: "Modificar",
+            about: "Consultar producto por id:"
         })
     } catch (error) {
         console.log(error)
