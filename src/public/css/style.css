@@ -317,3 +317,14 @@ input[type="submit"]:hover {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
 }
+
+.card-producto.no-disponible {
+    opacity: 0.6; 
+    position: relative;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.card-producto.no-disponible img {
+    filter: grayscale(100%);
+}

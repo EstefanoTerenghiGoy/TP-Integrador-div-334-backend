@@ -1,29 +1,33 @@
 <%- include("partials/head.ejs") %>
 
-<%- include("partials/nav.ejs") %>
+    <%- include("partials/nav.ejs") %>
 
 
-<main>
-    <section class="seccion-productos">
-        <h2><%= about %></h2>
-        <div id="contenedor-productos">
+        <main>
+            <section class="seccion-productos">
+                <h2>
+                    <%= about %>
+                </h2>
+                <div id="contenedor-productos">
 
-            <% productsList.forEach(producto=> { %>
-                <div class="card-producto">
-                    <img src="<%= producto.img %>" alt="<%= producto.nombre %>">
+                    <% productsList.forEach(producto=> { %>
+                        <div class="card-producto <%= producto.disponibilidad == 0 ? 'no-disponible' : '' %>">
+                            <img src="<%= producto.img %>" alt="<%= producto.nombre %>">
 
-                    <h3>
-                        <%= producto.nombre %>
-                    </h3>
-                    <p>ID: <%= producto.id %>
-                    </p>
-                    <p>Precio: $<%= producto.precio %>
-                    </p>
+                            <h3>
+                                <%= producto.nombre %>
+                            </h3>
+                            <p>ID: <%= producto.id %>
+                            </p>
+                            <p>Precio: $<%= producto.precio %>
+                            </p>
+
+                        </div>
+                        <% }) %>
+
                 </div>
-                <% }) %>
+            </section>
+        </main>
 
-        </div>
-    </section>
-</main>
 
-<%- include("partials/footer.ejs") %>
+        <%- include("partials/footer.ejs") %>
