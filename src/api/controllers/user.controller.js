@@ -1,4 +1,3 @@
-
 import connection from "../database/db.js";
 import bcrypt from "bcrypt";
 
