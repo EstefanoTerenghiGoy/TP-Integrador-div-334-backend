@@ -1,16 +1,14 @@
 <%- include("partials/head.ejs") %>
-
 <%- include("partials/nav.ejs") %>
 
-
 <main>
-    <section>
+    <section class="form-card">
         <h2><%= about %></h2>
-        <form id="buscar-form">
+        <form id="put-producto-form">
             <label for="idProducto">ID del producto</label>
             <input type="number" name="idProd" id="idProd" required>
 
-            <input type="submit" value="Buscar">
+            <input type="submit" value="Buscar producto">
         </form>
     </section>
 
@@ -18,6 +16,11 @@
     <div id="contenedor"></div>
 </main>
 
-<script src="/js/put.js"></script>
+<dialog id="modal-exito">
+    <h3>Operación Exitosa</h3>
+    <p id="mensaje-exito-modal"></p>
+    <button id="btn-aceptar-exito">Aceptar</button>
+</dialog>
 
+<script src="/js/put.js"></script>
 <%- include("partials/footer.ejs") %>

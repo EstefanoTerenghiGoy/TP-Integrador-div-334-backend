@@ -1,16 +1,36 @@
 const urlBase = "http://localhost:3000/api/products";
 
-const crearForm = document.getElementById("crear-form");
+const modalExito = document.getElementById("modal-exito");
+const mensajeExitoModal = document.getElementById("mensaje-exito-modal");
+const btnAceptarExito = document.getElementById("btn-aceptar-exito");
+
+btnAceptarExito.addEventListener("click", () => {
+    modalExito.close();
+});
+
+const postProductoForm = document.getElementById("post-producto-form");
 const mensaje = document.getElementById("mensaje");
 
-crearForm.addEventListener("submit", async (event) => {
+postProductoForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    const categoriaSeleccionada = event.target.categoria.value; // "teclado" o "mouse"
+    const carpetaCategoria = `${categoriaSeleccionada}s`; // Se transforma en "teclados" o "mouses"
+
+    const entradaImagen = event.target.img.value.trim();
+
+    const nombreImagenLimpio = entradaImagen
+        .replace(/[^a-zA-Z0-9- ]/g, '') // mantiene letras, números, guiones y espacios
+        .trim()
+        .replace(/\s+/g, '-');          // convierte espacios en guiones (ej: "Razer-DeathAdder-Essential")
+
+    const urlCompletaImagen = `/assets/products/${carpetaCategoria}/${nombreImagenLimpio}.png`;
 
     const body = {
         nombre: event.target.nombre.value.trim(),
         precio: Number(event.target.precio.value),
         disponibilidad: Number(event.target.disponibilidad.value),
-        img: event.target.img.value.trim(),
+        img: urlCompletaImagen,
         categoria: event.target.categoria.value
     };
 
@@ -23,26 +43,24 @@ crearForm.addEventListener("submit", async (event) => {
             return;
         }
 
-        mensaje.innerHTML = `
-                    <p class="mensaje exito">
-                        ${datos.message}<br>
-                        ID del nuevo producto: ${datos.productId}
-                    </p>
-                `;
+        mensaje.innerHTML = "";
 
-        crearForm.reset();
+        mensajeExitoModal.innerHTML = `
+            ${datos.message}<br>
+            <strong>ID del nuevo producto:</strong> ${datos.productId}
+        `;
+        modalExito.showModal();
+
+        postProductoForm.reset();
     } catch (error) {
         mostrarError(error.message);
     }
-
 });
 
 const crearUsuarioForm = document.getElementById("crear-usuario-form");
 
 crearUsuarioForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    console.log("antes de enviar body");
-    
 
     const body = {
         name: event.target.nombre.value.trim(),
@@ -50,15 +68,10 @@ crearUsuarioForm.addEventListener("submit", async (event) => {
         password: event.target.password.value
     };
 
-    console.log("despues de enviar body");
-    
-
     try {
         const response = await fetch("http://localhost:3000/api/users", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
 
@@ -69,14 +82,12 @@ crearUsuarioForm.addEventListener("submit", async (event) => {
             return;
         }
 
-        mensaje.innerHTML = `
-            <p class="mensaje exito">
-                ${datos.message}
-            </p>
-        `;
+        mensaje.innerHTML = "";
+
+        mensajeExitoModal.innerHTML = `${datos.message}`;
+        modalExito.showModal();
 
         crearUsuarioForm.reset();
-
     } catch (error) {
         mostrarError(error.message);
     }
@@ -84,6 +95,6 @@ crearUsuarioForm.addEventListener("submit", async (event) => {
 
 function mostrarError(texto) {
     mensaje.innerHTML = `
-                <p class="mensaje error">${texto}</p>
-            `;
+        <p class="mensaje error">${texto}</p>
+    `;
 }

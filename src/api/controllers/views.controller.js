@@ -45,7 +45,7 @@ export const putView = (req, res) => {
     try {
         res.render("put", {
             title: "Modificar",
-            about: "Consultar producto por id:"
+            about: "Modificar producto por id:"
         })
     } catch (error) {
         console.log(error)
@@ -56,6 +56,6 @@ export const putView = (req, res) => {
 export const deleteView = (req, res) => {
     res.render("delete", {
         title: "Eliminar",
-        about: "Consultar producto por id:"
+        about: "Eliminar producto por id:"
     });
 }

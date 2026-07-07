@@ -1,6 +1,6 @@
 <%- include("partials/head.ejs") %>
 
-<h4 class="texto-login"><%= about %></h4>
+<h2 class="texto-login"><%= about %></h2>
 
 <!-- ====================================================
     Enviando formularios de manera nativa con HTML
@@ -20,20 +20,21 @@ Nuestro endpoint recibira esta informacion (No JSON) como objetos JS
 Es decir, el middleware parseara automaticamente el tipo de info que envia el <form>
 
 -->
+<div class="form-card">
+    <form id="loginForm" action="/login" method="POST">
 
-<form id="loginForm" class="form-alta" action="/login" method="POST">
+        <!-- TO DO, introducir campos REGEX para validar los datos que enviamos -->
+        <label for="emailUser">Email</label>
+        <input type="email" name="email" id="emailUser" value="yo@gmail.com" required>
 
-    <!-- TO DO, introducir campos REGEX para validar los datos que enviamos -->
-    <label for="emailUser">Email</label>
-    <input type="email" name="email" id="emailUser" value="yo@gmail.com" required>
+        <label for="passwordUser">Password</label>
+        <input type="password" name="password" id="passwordUser" value="yo" required>
 
-    <label for="passwordUser">Password</label>
-    <input type="password" name="password" id="passwordUser" value="yo" required>
-
-    <div>
-        <input type="submit" value="Login">
-    </div>
-</form>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+    </form>
+</div>
 
 
 <!-- Mostramos posible mensaje de error del endpoint -->

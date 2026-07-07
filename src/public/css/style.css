@@ -1,131 +1,198 @@
-ul{
+/* ============================
+    Variables y Estilos Base
+============================ */
+:root {
+    --color-primario: #2c3e50;
+    --color-secundario: #3498db;
+    --color-fondo: #ecf0f1;
+    --color-superficie: #ffffff;
+    --color-texto: #333;
+    --color-error: #e74c3c;
+    --sombra-caja: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --radio-borde: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+
+ul {
     list-style-type: none;
 }
 
-header{
-    height: 80px;
+a {
+    text-decoration: none;
+    color: inherit;
 }
-header, .enlaces{
+
+/* ============================
+        Layout y Header
+============================ */
+header {
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+    padding: 1rem 2rem;
     display: flex;
-    border: 1px black;
     justify-content: space-between;
-    align-items: center; /* Añadido para centrar verticalmente */
-}
-
-.logo{
-    width: 50px;
-    height: 50px;
-    margin: auto;
-}
-.logo img{
-    border-radius: 5px;
-}
-
-.enlaces{
-    width: 85%;
-    margin-bottom: 0;
     align-items: center;
-
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-#contenedor-productos{
+.logo a {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 100px;
+    height: 40px;
+}
+
+.enlaces {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.enlace a {
+    font-weight: bold;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.enlace a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-secundario);
+    transition: width 0.3s ease;
+}
+
+.enlace a:hover::after {
+    width: 100%;
+}
+
+/* ============================
+    Contenedores y Tarjetas
+============================ */
+#contenedor-productos {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1.5rem;
     justify-content: center;
+    padding: 2rem;
 }
 
-.card-producto{
+.card-producto {
     display: flex;
-    border: 1px solid black;
-    width: 200px;
-    height: 230px;
-    font-size: 13px;
-    text-align: center;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #8b3838;
-    border-radius: 8px;  
-    padding: 10px;        
-    box-sizing: border-box; 
-}
-
-
-.card-producto img{
-    width: 100px;
-}
-
-.card-producto h3, .card-producto p{
-    font-size: 16px;
-    margin: 0;
-}
-
-
-.mensaje{
-    margin-top: 30px;
-    width: 300px;
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-caja);
+    width: 250px;
+    padding: 1.5rem;
     text-align: center;
-    border-radius: 5px;
-    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#botones-modal-eliminar{
-    display:flex;
-    gap:10px;
+.card-producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.error{
-    color: #dc3545;
-    background-color: #430c11;
+.card-producto img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.card-producto h3, .card-producto p {
+    margin: 0.25rem 0;
+}
+
+/* ============================
+        Formularios
+============================ */
+.form-card {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--color-superficie);
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-caja);
+    width: 100%;
+}
+
+.form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .texto-login {
     text-align: center;
-    margin-bottom: 40px;
-} 
-
-#loginForm {
-    margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
-.form-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.form-card label {
+    font-weight: bold;
 }
 
-/* Estilo para el botón de logout, ahora sin position: absolute */
-.form-logout input[type="submit"] {
-    background-color: #e74c3c; 
-    color: rgb(44, 44, 44);
-    padding: 10px 15px;
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+.form-card select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input[type="submit"], .btn-logout {
+    background-color: var(--color-secundario);
+    color: var(--color-superficie);
+    padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--radio-borde);
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.btn-logout:hover {
-    background-color: #c0392b;
+
+input[type="submit"]:hover {
+    background-color: #2980b9;
 }
 
-.form-alta {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    width: 75%;
-    align-items: start;
+.btn-logout {
+    background-color: var(--color-error) !important;
 }
 
-/* Media Queries (Responsive) */
-
+/* ============================
+    Responsive y Logout
+============================ */
 @media (max-width: 768px) {
     header, .enlaces {
-        flex-direction: column;
+        flex-direction: column; /* Apila los elementos verticalmente */
         height: auto;
-        gap: 15px
+        gap: 1rem;
     }
 
     .enlaces {
@@ -133,10 +200,120 @@ header, .enlaces{
     }
 }
 
-/* Estilo para el formulario de logout */
 .form-logout {
-    position: fixed;
-    top: 20px;      
-    right: 20px;     
-    z-index: 1000; 
+    margin: 0; /* Reseteamos el margen para una mejor alineación en el header */
+}
+
+/* ============================
+    Modales
+============================ */
+#modal-exito {
+    margin: auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    border: none;
+    border-radius: var(--radio-borde);
+    background-color: var(--color-superficie);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#modal-exito h3 {
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+#modal-exito p {
+    margin-bottom: 1.5rem;
+    color: var(--color-texto);
+}
+
+#btn-aceptar-exito {
+    background-color: var(--color-primario);
+    color: var(--color-superficie);
+    padding: 0.6rem 2rem;
+    border: none;
+    border-radius: var(--radio-borde);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#btn-aceptar-exito:hover {
+    background-color: var(--color-secundario);
+}
+
+#modal-exito::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+
+
+#modal-eliminar {
+    margin: auto; 
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    border: none;
+    border-radius: var(--radio-borde);
+    background-color: var(--color-superficie);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#modal-eliminar h3 {
+    color: var(--color-error);
+    margin-bottom: 1rem;
+}
+
+#modal-eliminar p {
+    margin-bottom: 1.5rem;
+    color: var(--color-texto);
+    line-height: 1.5;
+}
+
+#botones-modal-eliminar {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+#btn-cancelar, #btn-confirmar, #btnEliminar {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--radio-borde);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#btn-cancelar {
+    background-color: #bdc3c7;
+    color: #333;
+}
+
+#btn-cancelar:hover {
+    background-color: #95a5a6;
+}
+
+#btn-confirmar, #btnEliminar {
+    background-color: var(--color-error);
+    color: var(--color-superficie);
+}
+
+#btn-confirmar:hover, #btnEliminar:hover {
+    background-color: #c0392b;
+}
+
+#btn-cancelar:active, #btn-confirmar:active, #btnEliminar:active {
+    transform: scale(0.98);
+}
+
+#modal-eliminar::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
 }

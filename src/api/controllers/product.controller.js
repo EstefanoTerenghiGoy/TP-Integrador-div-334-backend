@@ -22,11 +22,11 @@ export const getAllProducts = async (req, res) => {
 export const getProductById = async (req, res) => {
     try {
         const [rows] = await productsModel.selectProductById(req.id)
-        
+
         if (rows.length === 0) {
             return res.status(404).json({ message: `No se encontró un producto con el id ${req.id}` });
         }
-        
+
         res.status(200).json({ payload: rows[0] }); // Retornamos el objeto directo, no un array con un único elemento
 
     } catch (error) {
@@ -38,7 +38,7 @@ export const createProduct = async (req, res) => {
     try {
         const { nombre, precio, disponibilidad, img, categoria } = req.body; // Cambiado 'imagen' por 'img' para consistencia
 
-        if (!nombre || !img || !categoria || !precio || !disponibilidad) {
+        if (!nombre || !img || !categoria || precio === undefined || disponibilidad === undefined) {
             return res.status(400).json({ message: "Datos inválidos. Asegúrese de incluir todos los datos" });
         }
 
@@ -48,7 +48,7 @@ export const createProduct = async (req, res) => {
 
         res.status(201).json({
             message: "Producto creado con éxito",
-            productId: result.insertId 
+            productId: result.insertId
         });
 
     } catch (error) {
@@ -68,7 +68,7 @@ export const modifyProduct = async (req, res) => {
     }
 }
 
-export const deleteProduct = async (req, res) => { 
+export const deleteProduct = async (req, res) => {
     try {
         await productsModel.deleteProduct(req.id);
 

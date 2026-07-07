@@ -1,13 +1,11 @@
 <%- include("partials/head.ejs") %>
-
 <%- include("partials/nav.ejs") %>
 
-
 <main>
-    <section class="form-productos">
-        <h2><%= about %></h2>
+    <section class="form-card">
+        <h2><%= about %></h2> 
 
-        <form id="crear-form">
+        <form id="post-producto-form">
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" required>
 
@@ -20,9 +18,9 @@
                 <option value="0">No disponible</option>
             </select>
 
-            <label for="img">Ruta de imagen</label>
-            <input type="text" id="img" name="img" placeholder="../../assets/categoria/nombre.png" required>
-
+            <label for="img">Ruta de imagen (Sin extensión)</label>
+            <input type="text" id="img" name="img" placeholder="ej: reddragon-kumara" required>
+            
             <label for="categoria">Categoría</label>
             <select id="categoria" name="categoria">
                 <option value="teclado">Teclado</option>
@@ -33,7 +31,7 @@
         </form>
     </section>
 
-    <section class="form-usuarios">
+    <section class="form-card">
         <h2>Crear usuario</h2>
 
         <form id="crear-usuario-form">
@@ -49,11 +47,17 @@
             <input type="submit" value="Crear usuario">
         </form>
     </section>
+    
     <section>
         <div id="mensaje"></div>
     </section>
 </main>
 
-<script src="/js/post.js"></script>
+<dialog id="modal-exito">
+    <h3>Operación Exitosa</h3>
+    <p id="mensaje-exito-modal"></p>
+    <button id="btn-aceptar-exito">Aceptar</button>
+</dialog>
 
+<script src="/js/post.js"></script>
 <%- include("partials/footer.ejs") %>
