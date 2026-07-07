@@ -12,8 +12,6 @@ export const loginView = (req, res) => {
 
 // Obtener usuarios admin
 export const getAdminUser = async (req, res) => {
-    // TODO crear modelo de usuarios!!
-
     try {
         // Vamos a recibir los datos que me envia el form del login
         const { email, password } = req.body;
@@ -26,9 +24,6 @@ export const getAdminUser = async (req, res) => {
                 error: "Todos los campos son obligatorios"
             });
         }
-
-        /* const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-        const [rows] = await connection.query(sql, [email, password]); */
         
         const sql = "SELECT * FROM users WHERE email = ?";
         const [rows] = await connection.query(sql, [email]);
@@ -44,20 +39,13 @@ export const getAdminUser = async (req, res) => {
         const user = rows[0];
         console.table(user);
 
-        /* // Guardamos una sesion
-        req.session.user = {
-            id: user.id,
-            nombre: user.name,
-            email: user.email
-        } */
-
         // Bcrypt 2 -> Traemos el password del req.body y comprobamos si su hasheo es el mismo que el de la BBDD
         const match = await bcrypt.compare(password, user.password);
         console.log(match);
         
         // Si los passwords hasheados coinciden, match es true y pasamos a crear la sesion y redirigir
         if (match) {
-            // Guardamos una sesion
+            // Guardado de sesion
             req.session.user = {
                 id: user.id,
                 nombre: user.name,
@@ -76,7 +64,7 @@ export const getAdminUser = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        // Esto hay que borrarlo despues, lo hice porque todavía no existe la tabla y estoy probando.
+        
         return res.status(500).render("login", {
         title: "Login",
         about: "Introduci tu email y password",
